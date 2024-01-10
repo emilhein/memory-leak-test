@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <main>
+        <h1>Memory - Danger!</h1>
+        If you click some times and watch in the console. The memory should be
+        released at some point (might take some time)
+        <div id="container"></div>
+        <button name="add" onclick="insertSubTree()">Add html subtree</button>
+    </main>
+</body>
+
+</html>
+<script>
+    let nodesInserted = [] // <-- This array can contains references, which will prevent garbage collection
+    const insertSubTree = () => {
+        const subtreeDepth = 10;
+        const parentNode = document.createElement('div');
+        const randomString = (Math.random() + 1).toString(36).substring(7);
+        for (let i = 1; i <= subtreeDepth; i++) {
+            const childNode = document.createElement('div');
+            childNode.id = `${randomString}-${i}`;
+            parentNode.appendChild(childNode);
+        }
+        nodesInserted.push(parentNode) // <-- This will keep the reference
+        let container = document.getElementById('container');
+        container.innerHTML = parentNode.innerHTML;
+
+        console.log(nodesInserted.length);
+
+    };
+</script>
